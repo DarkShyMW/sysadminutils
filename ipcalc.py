@@ -45,6 +45,9 @@ def calculate_broadcast(network, mask):
 
 def main():
     while True:
+        print("▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄")
+        print("█ SysAdmin Toolkit v1.0 █")
+        print("▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀")
         try:
             user_input = input("\nВведите IP и маску (формат: IP/CIDR или IP маска): ").strip()
             if user_input.lower() in ('exit', 'quit'):
