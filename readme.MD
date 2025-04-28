@@ -1,6 +1,8 @@
 
-# Network Calculator (Python)
+# Network Tools (Python)
 
+
+## ipcalc
 Простой калькулятор сетей IPv4 на чистом Python без внешних зависимостей
 
 ## Возможности
@@ -28,12 +30,12 @@
 
 1. Скопируйте файл с кодом:
 ```bash
-wget https://raw.githubusercontent.com/ваш_репозиторий/network_calculator.py
+wget https://raw.githubusercontent.com/DarkShyMW/sysadminutils/refs/heads/main/ipcalc.py
 ```
 
 2. Запустите программу:
 ```bash
-python network_calculator.py
+python ipcalc.py
 ```
 
 ## Использование
