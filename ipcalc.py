@@ -1,8 +1,6 @@
 # Made with love by DarkShy
 # Инструмент для рассчета подсетей
 # Спасибо Владимиру Валентновичу Шальневу за обучение :3
-# TODO: не забыть поправить момент с тем, что если пользователь забыл указать маску, то вывести ему об этом инфу.
-
 
 def parse_ip(ip_str):
     octets = list(map(int, ip_str.split('.')))
@@ -46,60 +44,69 @@ def calculate_broadcast(network, mask):
     return [network[i] | inverse_mask[i] for i in range(4)]
 
 def main():
-    try:
-        user_input = input("Введите IP и маску (формат: IP/CIDR или IP маска): ").strip()
-        
-        if '/' in user_input:
-            ip_part, cidr_part = user_input.split('/')
-            cidr = int(cidr_part)
-            mask = cidr_to_mask(cidr)
-        else:
-            parts = user_input.split()
-            if len(parts) != 2:
-                raise ValueError("Неверный формат ввода")
-            ip_part, mask_part = parts
-            mask = parse_ip(mask_part)
-            if not is_valid_mask(mask):
-                raise ValueError("Неверная маска подсети")
-            cidr = mask_to_cidr(mask)
-        
-        ip = parse_ip(ip_part)
-        network = calculate_network(ip, mask)
-        broadcast = calculate_broadcast(network, mask)
-        
-        # Определение количества хостов
-        if cidr <= 30:
-            host_count = (2 ** (32 - cidr)) - 2
-        elif cidr == 31:
-            host_count = 2
-        elif cidr == 32:
-            host_count = 1
-        else:
-            host_count = 0
-        
-        # Проверяем на количество хостов
-        if cidr < 31:
-            first_host = network.copy()
-            first_host[3] += 1
-            last_host = broadcast.copy()
-            last_host[3] -= 1
-        elif cidr == 31:
-            first_host = network
-            last_host = broadcast
-        else:  # /32
-            first_host = network
-            last_host = network
+    while True:
+        try:
+            user_input = input("\nВведите IP и маску (формат: IP/CIDR или IP маска): ").strip()
+            if user_input.lower() in ('exit', 'quit'):
+                print("Выход из программы")
+                break
+            
+            if '/' in user_input:
+                ip_part, cidr_part = user_input.split('/')
+                cidr = int(cidr_part)
+                mask = cidr_to_mask(cidr)
+            else:
+                parts = user_input.split()
+                if len(parts) != 2:
+                    raise ValueError("Неверный формат ввода")
+                ip_part, mask_part = parts
+                mask = parse_ip(mask_part)
+                if not is_valid_mask(mask):
+                    raise ValueError("Неверная маска подсети")
+                cidr = mask_to_cidr(mask)
+            
+            ip = parse_ip(ip_part)
+            network = calculate_network(ip, mask)
+            broadcast = calculate_broadcast(network, mask)
+            
+            # Расчет количества хостов
+            if cidr <= 30:
+                host_count = (2 ** (32 - cidr)) - 2
+            elif cidr == 31:
+                host_count = 2
+            elif cidr == 32:
+                host_count = 1
+            else:
+                host_count = 0
+            
+            # Определение диапазона хостов
+            if cidr < 31:
+                first_host = network.copy()
+                first_host[3] += 1
+                last_host = broadcast.copy()
+                last_host[3] -= 1
+            elif cidr == 31:
+                first_host = network
+                last_host = broadcast
+            else:
+                first_host = network
+                last_host = network
 
-        print("\nРезультаты расчета:")
-        print(f"IP-адрес: {ip_to_str(ip)}")
-        print(f"Маска сети: {ip_to_str(mask)} (CIDR /{cidr})")
-        print(f"Сетевой адрес: {ip_to_str(network)}")
-        print(f"Широковещательный адрес: {ip_to_str(broadcast)}")
-        print(f"Доступно хостов: {host_count}")
-        print(f"Диапазон хостов: {ip_to_str(first_host)} - {ip_to_str(last_host)}")
-    
-    except ValueError as e:
-        print(f"Ошибка: {e}")
+            print("\nРезультаты расчета:")
+            print(f"IP-адрес: {ip_to_str(ip)}")
+            print(f"Маска сети: {ip_to_str(mask)} (CIDR /{cidr})")
+            print(f"Сетевой адрес: {ip_to_str(network)}")
+            print(f"Широковещательный адрес: {ip_to_str(broadcast)}")
+            print(f"Доступно хостов: {host_count}")
+            print(f"Диапазон хостов: {ip_to_str(first_host)} - {ip_to_str(last_host)}")
+        
+        except ValueError as e:
+            print(f"Ошибка: {e}")
+        except KeyboardInterrupt:
+            print("\nВыход из программы")
+            break
+        except Exception as e:
+            print(f"Неизвестная ошибка: {e}")
 
 if __name__ == "__main__":
     main()
