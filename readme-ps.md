@@ -31,17 +31,17 @@
 
 1. Скачайте файл скрипта:
 ```bash
-wget https://example.com/sysadmin_toolkit.py
+wget https://raw.githubusercontent.com/DarkShyMW/sysadminutils/refs/heads/main/portscan.py
 ```
 
 2. Сделайте скрипт исполняемым (Linux/macOS):
 ```bash
-chmod +x sysadmin_toolkit.py
+chmod +x portscan.py
 ```
 
 3. Запустите:
 ```bash
-python sysadmin_toolkit.py
+python portscan.py
 ```
 
 ## Использование
