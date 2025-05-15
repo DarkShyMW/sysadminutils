@@ -28,7 +28,7 @@
 **Запуск:**
 ```bash
 # Для калькулятора сетей
-python network_calculator.py
+python ipcalc.py
 
 # Для набора инструментов
 python sysadmin_toolkit.py
