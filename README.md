@@ -31,7 +31,7 @@
 python ipcalc.py
 
 # Для набора инструментов
-python sysadmin_toolkit.py
+python portscan.py
 ```
 
 ## 🪲 При найденных багах
